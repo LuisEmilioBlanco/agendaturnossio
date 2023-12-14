@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultorio Odontologico</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <img src="./assets/img/logo.jpg" alt="Logo del consultorio" class="logo">
+    <h1 class="header">Agenda Turnos Odontologicos</h1>
+        <div>
+            <img src="./assets/img/paciente-en-atencion.jpg" alt="paciente atendiendose" class="dental-img">
+        </div>
+        <div>
+            <label for="nombrePacienteInput">Nombre del paciente:</label>
+            <input type="text" id="nombrePacienteInput" placeholder="Nombre y Apellido">
+        </div>
+        <div>
+            <label for="fechaHoraInput">Fecha y hora:</label>
+            <input type="datetime-local" id="fechaHoraInput">
+        </div>
+        <div>
+            <label for="estadoInput">Estado:</label>
+            <select id="estadoInput">
+                <option value="Pendiente">Pendiente</option>
+                <option value="Completado">Completado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+        </div>
+        <div>
+            <label for="duracionInput">Duración aprox:</label>
+            <input type="number" id="duracionInput" placeholder="Duración">
+        </div>
+            <button onclick="agregarTurno()">Agregar turno</button>
+        <hr>
+        <div>
+            <input type="text" id="busquedaNombreInput" placeholder="Buscar por nombre">
+            <button onclick="buscarPorNombre()">Buscar</button>
+        </div>
+        <div>
+            <select id="estadoFiltro">
+                <option value="">Mostrar todos</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Completado">Completado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+            <button onclick="filtrarPorEstado()">Filtrar por estado</button>
+        </div>
+        <ul id="listaTurnos"></ul>
+<script src="js/main.js"></script>
+</body>
+</html>
