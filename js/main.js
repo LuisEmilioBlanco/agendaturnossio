@@ -1,30 +1,57 @@
-
 let turnos = [];
 
-function agregarTurno() {
-    const input = document.getElementById('turnoInput');
-    const nombrePaciente = input.value;
-
-if (nombrePaciente !== '') {
-    const nuevoTurno = {
-        paciente: nombrePaciente,
-        hora: obtenerHoraActual(),
-        fecha: obtenerFechaActual(),
-        estado: 'Pendiente'
-    };
-    turnos.push(nuevoTurno);
-    input.value = '';
+window.onload = function () {
+    cargarTurnosDesdeLocalStorage();
     mostrarTurnos();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputNombre = document.getElementById('nombrePacienteInput');
+        const botonAgregar = document.getElementById('agregarBtn');
+
+        botonAgregar.addEventListener('click', function() {
+            agregarTurno(inputNombre.value);
+        });
+
+        function agregarTurno(nombrePaciente) {
+            if (nombrePaciente.trim() !== '') {
+                const nuevoTurno = {
+                    paciente: nombrePaciente,
+                    hora: obtenerHoraActual(),
+                    fecha: obtenerFechaActual(),
+                    estado: 'Pendiente'
+                };
+                turnos.push(nuevoTurno);
+                guardarTurnosEnLocalStorage();
+                inputNombre.value = '';
+                console.log('Nuevo turno agregado:', nuevoTurno);
+                mostrarTurnos();
+            } else {
+                alert('Por favor ingresa un nombre de paciente válido.');
+            }
+        }
+
+    });
+};
+
+function guardarTurnosEnLocalStorage() {
+    localStorage.setItem('turnos', JSON.stringify(turnos));
+}
+
+function cargarTurnosDesdeLocalStorage() {
+    const turnosGuardados = localStorage.getItem('turnos');
+    if (turnosGuardados) {
+        turnos = JSON.parse(turnosGuardados);
     }
 }
 
 function mostrarTurnos() {
     const lista = document.getElementById('turnoList');
-    lista.innerHTML = ''; 
+    lista.innerHTML = ''; // Limpiamos la lista antes de agregar los nuevos turnos
+
     turnos.forEach((turno, index) => {
-    const li = document.createElement('li');
-    li.textContent = `${index + 1}. Paciente: ${turno.paciente} - Hora: ${turno.hora} - Fecha: ${turno.fecha} - Estado: ${turno.estado}`;
-    lista.appendChild(li);
+        const li = document.createElement('li');
+        li.textContent = `${index + 1}. Paciente: ${turno.paciente} - Hora: ${turno.hora} - Fecha: ${turno.fecha} - Estado: ${turno.estado}`;
+        lista.appendChild(li); // Agregamos el nuevo turno a la lista
     });
 }
 
@@ -43,24 +70,31 @@ function obtenerFechaActual() {
     return `${dia}/${mes}/${año}`;
 }
 
-function buscarPorNombre() {
-    const nombreABuscar = document.getElementById('busquedaNombreInput').value;
-    const resultados = buscarTurnoPorNombre(nombreABuscar);
-    mostrarResultados(resultados);
-}
-
-function filtrarPorEstado() {
-    const estadoSeleccionado = document.getElementById('estadoFiltro').value;
-    const resultados = filtrarPorEstado(estadoSeleccionado);
-    mostrarResultados(resultados);
-}
-
 function mostrarResultados(resultados) {
-    const listaTurnos = document.getElementById('listaTurnos');
-    listaTurnos.innerHTML = '';
-    resultados.forEach((turno, index) => {
+    const listaResultados = document.getElementById('resultadosList');
+    listaResultados.innerHTML = '';
+    
+    if (resultados.length === 0) {
         const li = document.createElement('li');
-        li.textContent = `${index + 1}. Paciente: ${turno.paciente} - Fecha y hora: ${turno.fechaHora} - Estado: ${turno.estado}`;
-        listaTurnos.appendChild(li);
-    });
+        li.textContent = 'No se encontraron resultados';
+        listaResultados.appendChild(li);
+    } else {
+        resultados.forEach((turno, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${index + 1}. Paciente: ${turno.paciente} - Fecha y hora: ${turno.fecha} ${turno.hora} - Estado: ${turno.estado}`;
+            listaResultados.appendChild(li);
+        });
+    }
+}
+
+function buscarTurnoPorNombre(nombre) {
+    return turnos.filter(turno => turno.paciente.toLowerCase().includes(nombre.toLowerCase()));
+}
+
+function filtrarPorEstado(estado) {
+    if (estado === '') {
+        return turnos;
+    } else {
+        return turnos.filter(turno => turno.estado === estado);
+    }
 }

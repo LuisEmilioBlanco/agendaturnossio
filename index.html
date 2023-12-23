@@ -33,7 +33,8 @@
             <label for="duracionInput">Duración aprox:</label>
             <input type="number" id="duracionInput" placeholder="Duración">
         </div>
-            <button onclick="agregarTurno()">Agregar turno</button>
+            <button id="agregarBtn">Agregar turno</button>
+
         <hr>
         <div>
             <input type="text" id="busquedaNombreInput" placeholder="Buscar por nombre">
@@ -48,7 +49,11 @@
             </select>
             <button onclick="filtrarPorEstado()">Filtrar por estado</button>
         </div>
-        <ul id="listaTurnos"></ul>
+        <div>
+            <ul id="listaTurnos"></ul>
+            <ul id="turnoList"></ul>
+            <ul id="resultadosList"></ul>
+        </div>
 <script src="js/main.js"></script>
 </body>
 </html>
