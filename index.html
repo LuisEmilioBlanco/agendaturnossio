@@ -1,59 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultorio Odontologico</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <img src="./assets/img/logo.jpg" alt="Logo del consultorio" class="logo">
     <h1 class="header">Agenda Turnos Odontologicos</h1>
-        <div>
-            <img src="./assets/img/paciente-en-atencion.jpg" alt="paciente atendiendose" class="dental-img">
-        </div>
-        <div>
-            <label for="nombrePacienteInput">Nombre del paciente:</label>
-            <input type="text" id="nombrePacienteInput" placeholder="Nombre y Apellido">
-        </div>
-        <div>
-            <label for="fechaHoraInput">Fecha y hora:</label>
-            <input type="datetime-local" id="fechaHoraInput">
-        </div>
-        <div>
-            <label for="estadoInput">Estado:</label>
-            <select id="estadoInput">
-                <option value="Pendiente">Pendiente</option>
-                <option value="Completado">Completado</option>
-                <option value="Cancelado">Cancelado</option>
-            </select>
-        </div>
-        <div>
-            <label for="duracionInput">Duración aprox:</label>
-            <input type="number" id="duracionInput" placeholder="Duración">
-        </div>
-            <button id="agregarBtn">Agregar turno</button>
-
-        <hr>
+    <div>
+        <img src="./assets/img/paciente-en-atencion.jpg" alt="paciente atendiendose" class="dental-img">
+    </div>
+    <div>
+        <label for="nombrePacienteInput">Nombre del paciente:</label>
+        <input type="text" id="nombrePacienteInput" placeholder="Nombre y Apellido">
+    </div>
+    <div>
+        <label for="fechaHoraInput">Fecha y hora:</label>
+        <input type="datetime-local" id="fechaHoraInput">
+    </div>
+    <div>
+        <label for="estadoInput">Estado:</label>
+        <select id="estadoInput">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Completado">Completado</option>
+            <option value="Cancelado">Cancelado</option>
+        </select>
+    </div>
+    <div>
+        <label for="duracionInput">Duración aprox:</label>
+        <input type="number" id="duracionInput" placeholder="Duración">
+    </div>
+    <button id="agregarBtn">Agregar turno</button>
+    <hr>
+    <div>
         <div>
             <input type="text" id="busquedaNombreInput" placeholder="Buscar por nombre">
-            <button onclick="buscarPorNombre()">Buscar</button>
+            <button id="buscarPorNombreBtn">Buscar por Nombre</button>
         </div>
-        <div>
-            <select id="estadoFiltro">
-                <option value="">Mostrar todos</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Completado">Completado</option>
-                <option value="Cancelado">Cancelado</option>
-            </select>
-            <button onclick="filtrarPorEstado()">Filtrar por estado</button>
-        </div>
-        <div>
-            <ul id="listaTurnos"></ul>
-            <ul id="turnoList"></ul>
-            <ul id="resultadosList"></ul>
-        </div>
-<script src="js/main.js"></script>
+    </div>
+    <div>
+        <select id="estadoFiltro">
+            <option value="">Mostrar todos</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Completado">Completado</option>
+            <option value="Cancelado">Cancelado</option>
+        </select>
+        <button onclick="filtrarPorEstado()">Filtrar por estado</button>
+    </div>
+    <div id="turnoList"></div>
+    <div id="resultadosList"></div>
+
+    <script id="turnoTemplate" type="text/x-handlebars-template">
+        <p>{{index}}. Paciente: {{paciente}} - Hora: {{hora}} - Fecha: {{fecha}} - Estado: {{estado}}
+            <button class="eliminarBtn" data-index="{{index}}">Eliminar</button>
+        </p>
+    </script>
+
+    <script src="js/main.js"></script>
 </body>
+
 </html>
